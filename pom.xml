@@ -8,6 +8,10 @@
     <artifactId>hawtio-issue</artifactId>
     <version>1.0</version>
 
+    <properties>
+        <hawtio.version>1.2-M22</hawtio.version>
+    </properties>
+
     <dependencies>
         <!-- ActiveMQ & Camel -->
         <dependency>
@@ -55,7 +59,7 @@
         <dependency>
             <groupId>io.hawt</groupId>
             <artifactId>hawtio-default-offline</artifactId>
-            <version>1.2-M20</version>
+            <version>${hawtio.version}</version>
             <type>war</type>
             <scope>provided</scope>
         </dependency>
@@ -84,7 +88,7 @@
                                 <artifactItem>
                                     <groupId>io.hawt</groupId>
                                     <artifactId>hawtio-default-offline</artifactId>
-                                    <version>1.2-M16</version>
+                                    <version>${hawtio.version}</version>
                                     <type>war</type>
                                 </artifactItem>
                             </artifactItems>
