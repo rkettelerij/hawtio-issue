@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xsi:schemaLocation="http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.12.0.xsd
+                           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="activeMQ" useJmx="true">
+        <transportConnectors>
+          <transportConnector uri="vm://localhost"/>
+        </transportConnectors>
+        <persistenceAdapter>
+          <kahaDB directory="target/amq-data" />
+        </persistenceAdapter>
+      </broker>
+
+    <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <!--<property name="configuration" ref="jmsConfig"/>-->
+        <property name="usePooledConnection" value="true" />
+        <property name="testConnectionOnStartup" value="true"/>
+        <property name="brokerURL" value="vm://localhost?create=false" />
+        <!-- if we are using transacted then enable CACHE_CONSUMER (if not using XA) to run faster
+             see more details at: http://camel.apache.org/jms
+        <property name="transacted" value="true"/>
+        <property name="cacheLevelName" value="CACHE_CONSUMER" />
+        -->
+    </bean>
+
+    <bean id="exampleRoute" class="nl.avisi.hawtio.issue.ExampleRoute" />
+
+    <camel:camelContext lazyLoadTypeConverters="false">
+        <camel:routeBuilder ref="exampleRoute" />
+    </camel:camelContext>
+
+</beans>
